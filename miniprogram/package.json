@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@vant/weapp": "^1.10.14",
+    "miniprogram-sm-crypto": "^0.3.12"
+  },
+  "name": "miniprogram",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:butcher0808/smart_campus_minipro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

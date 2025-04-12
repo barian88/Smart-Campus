@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikun.backend.mapper.CameraToModelMapper">
+
+    <insert id="insertCameraToModel" parameterType="com.ikun.backend.entity.CameraToModel"
+            useGeneratedKeys="true" keyProperty="ruleId">
+        insert into camera_to_model (rule_id,camera_id,model_id)
+        values
+        <foreach collection="rules" item="rule" separator=",">
+            (#{rule.ruleId},#{rule.cameraId},#{rule.modelId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteCameraToModel" parameterType="com.ikun.backend.entity.CameraToModel">
+        delete from camera_to_model
+        <foreach collection="ruleIds" item="ruleId" separator="," open="WHERE rule_id IN(" close=")">
+            #{ruleId}
+        </foreach>
+    </delete>
+
+    <select id="selectRuleByCameraId" parameterType="Integer" resultType="com.ikun.backend.entity.CameraToModel">
+        select * from camera_to_model where camera_id = #{cameraId}
+    </select>
+
+    <select id="selectCountByModel" resultType="com.ikun.backend.entity.Model">
+        select model_id as modelId,
+               count(*) as modelAppliedNumber
+        from camera_to_model group by model_id
+    </select>
+</mapper>

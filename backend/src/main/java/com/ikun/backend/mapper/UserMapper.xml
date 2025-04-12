@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikun.backend.mapper.UserMapper">
+
+    <insert id="insertUser" parameterType="com.ikun.backend.entity.User">
+        insert into user (id,user_id,temp_user_id,ip_addr,openid,role_id)
+        values (#{id},#{userId},#{tempUserId},
+                #{ipAddr},#{openid},#{roleId})
+                ON DUPLICATE KEY UPDATE
+                ip_addr = #{ipAddr},
+                temp_user_id = #{tempUserId};
+    </insert>
+
+    <select id="selectUserByTempUserId" resultType="com.ikun.backend.entity.User" parameterType="String">
+        select * from user where temp_user_id = #{tempUserId};
+    </select>
+
+    <select id="selectUserById" resultType="com.ikun.backend.entity.User" parameterType="Integer">
+        select * from user where id = #{id};
+    </select>
+
+    <select id="selectUserByOpenid" resultType="com.ikun.backend.entity.User" parameterType="String">
+        select * from user where openid = #{openid};
+    </select>
+
+    <select id="selectOpenidByUserIds" resultType="String" parameterType="Integer">
+        select openid from user
+        <foreach collection="userIds" item="userId" separator="," open="WHERE id IN(" close=")">
+            #{userId}
+        </foreach>
+
+    </select>
+
+    <update id="updateUser"  parameterType="com.ikun.backend.entity.User">
+        update user set real_name = #{realName},phone = #{phone},school_job_id = #{schoolJobId}
+        where id = #{id}
+    </update>
+
+    <select id="selectUserByPageByCondition"  resultType="com.ikun.backend.entity.User"
+            parameterType="com.ikun.backend.utils.pageUtil.PageRequest">
+        select
+        *
+        from user
+        <where>
+            <if test = "roleId == 1 || roleId == 2">
+                role_id = #{roleId}
+            </if>
+            <if test = "realName != '' and realName != null ">
+                real_name = #{realName}
+            </if>
+            <if test = "schoolJobId != '' and schoolJobId != null ">
+                school_job_id = #{schoolJobId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectUserByIds" parameterType="java.util.List" resultType="com.ikun.backend.entity.User">
+        select * from user
+        <foreach collection="list" item="id" separator="," open="WHERE id IN(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="updateUserById" parameterType="com.ikun.backend.entity.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="avatar != null and avatar.length()>0"> avatar = #{avatar} , </if>
+            <if test="nickname != null and nickname.length()>0"> nickname = #{nickname} , </if>
+            <if test="schoolJobId != null and schoolJobId.length()>0"> school_job_id = #{schoolJobId} , </if>
+            <if test="phone != null and phone.length()>0"> phone = #{phone}, </if>
+            <if test="realName != null and realName.length()>0"> real_name = #{realName}, </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Integer">
+        delete from user where id = #{id}
+    </delete>
+
+    <update id="updateSubScribeCount" parameterType="Integer">
+        update user set subscribe_count = subscribe_count
+        <if test="number == 1">
+            +1
+        </if>
+        <if test="number == -1">
+            -1
+        </if>
+        where id = #{id}
+    </update>
+</mapper>

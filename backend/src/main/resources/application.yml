@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: backend
+  datasource: #数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver #数据库驱动
+    url: jdbc:mysql://43.143.203.197:3306/smart_campus?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true  # 数据库的 JDBC URL
+#    url: jdbc:localhost://mysql:3306/smart_campus?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true  # 数据库的 JDBC URL
+    username: root   #数据库的登录用户名
+    password: 81b8d5c3b59f5bef   #数据库的登录密码
+#    password: 123456   #数据库的登录密码
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+
+server:
+  port: 8003
+mybatis:
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  # 搜索指定包别名
+  type-aliases-package: com.ikun.backend.entity
+# pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: ''
+  # 连接超时时间
+  timeout: 30000
+
+wx-app:
+  appid: wx2401bad85115e005
+  secret: 22ebcb49cbbfb1e8a74161687ffd3fd4
+#  魏礼梅
+#  appid: wx994fcf2dacd1e516
+#  secret: 5392ca574b8325fbee67a3ffc5193532
+  send-message:
+    template-id: zJgeYwOcLt_AXIz8itotKcmDwxlcwXUjNLcDeUv7be0
+    page: pages/deal/deal
+    miniprogram-state: developer
+    lang: zh_CN
+
+tencent:
+  sms:
+    APP_ID: 1400803336
+    APP_KEY: 0d2d860f27c45d39bb7164e4b8324e17
+    TEMPLATE_ID: 1734481
+    SIGN: 智安之眼公众号
+    EFFECTIVE_Time: 300
+

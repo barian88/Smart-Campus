@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/mine/mine",
+    "pages/deal/deal",
+    "pages/edit_profile/edit_profile"
+  ],
+  "window": {
+    "navigationBarTitleText": "智安之眼",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f5f5f5",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor": "#528EFF",
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/images/icon/shouye.png",
+        "selectedIconPath": "/images/icon/shouye-b.png"
+      },
+      {
+        "pagePath": "pages/search/search",
+        "text": "事件",
+        "iconPath": "/images/icon/liebiao.png",
+        "selectedIconPath": "/images/icon/liebiao-b.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/images/icon/wode.png",
+        "selectedIconPath": "/images/icon/wode-b.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "van-field": "@vant/weapp/field/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-transition": "@vant/weapp/transition/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-card": "@vant/weapp/card/index"
+
+  },
+
+  "sitemapLocation": "sitemap.json"
+}

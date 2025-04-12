@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikun.backend.mapper.CameraToUserMapper">
+
+    <select id="selectAccordingUserIds" resultType="Integer" parameterType="Integer">
+        select user_id from camera_to_user where camera_id = #{cameraId}
+    </select>
+
+    <insert id="insertSuperintendent">
+        insert into camera_to_user (camera_id,user_id) values
+            <foreach collection="userIds" item="userId" separator=",">
+                (#{cameraId},#{userId})
+            </foreach>
+    </insert>
+
+    <delete id="deleteSuperintendent">
+        delete from camera_to_user
+            <foreach collection="userIds" item="userId" separator="," open="WHERE user_id IN(" close=")">
+                #{userId}
+            </foreach>
+            and camera_id = #{cameraId}
+    </delete>
+
+    <select id="selectUserIdsByCameraId" parameterType="Integer" resultType="Integer">
+        select user_id from camera_to_user where camera_id = #{cameraId}
+    </select>
+
+    <select id="selectCameraNumByUserId" resultType="java.lang.Integer">
+    select count(*) from camera_to_user where user_id = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,10 @@
+<view class="container">
+  <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <image class="avatar" src="{{userInfo.avatar}}"></image>
+  </button>
+  <view class="tip">点击图片选择头像</view>
+</view>
+<view class="container">
+  <text class="title">昵称</text>
+  <input type="nickname" class="weui-input" placeholder="请输入昵称" value="{{userInfo.nickname}}" bindconfirm="bindInput" />
+</view>

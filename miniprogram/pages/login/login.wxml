@@ -1,0 +1,12 @@
+<view wx:if="{{canIUse}}">
+  <image class="background" src="https://bucket-1305916869.cos.ap-beijing.myqcloud.com/web_image/back.png"></image>
+  <view class="container">
+    <view class='header'>
+      <image mode="heightFix" src='/images/logo/logo.png'></image>
+    </view>
+    <view class='but-login' bindtap="login">
+      开始使用
+    </view>
+  </view>
+</view>
+<view wx:else>请升级微信版本</view>

@@ -1,0 +1,41 @@
+<!--pages/logins/logins.wxml-->
+<view>
+  <view class="logo">
+    <image mode="heightFix" src="/images/logo/logo-black.png" />
+  </view>
+  <view class="tip">初次注册用户，请完成身份绑定</view>
+
+  <van-transition show="{{ bindPhone }}" name="fade-right" bind:after-leave="goBindInfo">
+    <view class="phone">
+      <view class="container">
+        <view class="input-view">
+          <input label="手机号" class="input-text" placeholder="请输入手机号" name="phone" type="number" bindblur="setParam" data-param="phone" />
+        </view>
+        <view class="divider"></view>
+        <view class="input-view">
+          <input label="短信验证码" class="input-text" placeholder="请输入验证码" name="captcha" type="number" bindinput="setParam" data-param="captcha" />
+          <view wx:if="{{msgBtnAble}}" class="but-captcha" bindtap="sendcode">{{sendMessageTip}}</view>
+          <view wx:if="{{!msgBtnAble}}" class="but-captcha">{{sendMessageTip}}</view>
+        </view>
+      </view>
+      <view class="iconfont icon-xiayibu1 but-next {{(phone=='' || captcha=='')?'disable':'enable'}}" bindtap="checkCode"></view>
+    </view>
+  </van-transition>
+
+  <van-transition show="{{ bindInfo }}" name="fade-right">
+    <view class="user-info">
+      <view class="container">
+        <view class="input-view">
+          <input label="学校工号" class="input-text" placeholder="请输入学校工号" name="schoolJobId" type="number" bindblur="setParam" data-param="schoolJobId" />
+        </view>
+        <view class="divider"></view>
+        <view class="input-view">
+          <input label="realName" class="input-text" placeholder="请输入姓名" name="realName" bindinput="setParam" data-param="realName" />
+        </view>
+      </view>
+      <view class="but-login {{(realName=='' || schoolJobId=='')?'disable':'enable'}}" bindtap="bindUserInfo">确定</view>
+    </view>
+  </van-transition>
+
+
+</view>

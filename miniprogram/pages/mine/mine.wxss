@@ -1,0 +1,61 @@
+@import '../../style/icon/iconfont.wxss';
+
+
+.userInformation {
+  /*头像&微信名称*/
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 32rpx 48rpx;
+  margin: 24rpx;
+  border-radius: 24rpx;
+}
+
+.userInfomation-avatar {
+  /*头像*/
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 14rpx;
+}
+
+
+.userInformation-nickname {
+  /*昵称*/
+  color: #000000;
+  font-size: larger;
+  font-weight: bold;
+  margin-left: 48rpx;
+}
+
+.icon-xiugai {
+  font-size: large;
+  margin-left: 24rpx;
+  color: #555;
+}
+
+.info-list {
+  background-color: #ffffff;
+  margin-top: 36rpx !important;
+  margin: 24rpx;
+  border-radius: 24rpx;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  font-size: large;
+  color: #000000;
+  padding: 32rpx 48rpx;
+}
+
+.divider {
+  height: 2rpx;
+  width: calc(100% - 48rpx);
+  margin: auto;
+  background-color: #f5f5f5;
+}
+
+.list-item .text {
+  color: #555;
+  margin: 0 24rpx 0 8rpx;
+}

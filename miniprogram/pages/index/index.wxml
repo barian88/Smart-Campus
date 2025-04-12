@@ -1,0 +1,64 @@
+<!--pages/index/index.wxml-->
+<view class="date-background">
+  <view class="container" style="padding-top: {{navigationBarHeight}}px;">
+    <image class="img" src="../../images/logo/logo-trans.png" />
+    <view>
+      <view class="title">智安之眼</view>
+      <view class="welcome">以智安之慧眼，护校园之安全</view>
+    </view>
+  </view>
+  <view class="container">
+    <text class="date">{{date}}</text>
+    <text class="weekday">{{weekday}}</text>
+    <view class="welcome">欢迎使用智安之眼小程序，{{userInfo.realName}}</view>
+  </view>
+</view>
+<view class="subscribe-count">
+  <text class="text">可用消息推送次数</text>
+  <text class="number">{{subscribeCount}}</text>
+  <text class="iconfont icon-jiahao" bindtap="messageSubscribe"></text>
+</view>
+<view class="card-list">
+  <view class="title">数据统计</view>
+  <!--负责摄像头个数-->
+  <view class='function'>
+    <view class="iconfont icon-monitor-camera"></view>
+    <view class="number">{{cameraNum}}</view>
+    <view class="divider"></view>
+    <view class="text">负责摄像头</view>
+  </view>
+  <!--累计处理事件个数-->
+  <view class='function'>
+    <view class="iconfont icon-tongji"></view>
+    <view class="number">{{eventNum}}</view>
+    <view class="divider"></view>
+    <view class="text">累计处理事件</view>
+  </view>
+  <!--待处理事件个数-->
+  <view class='function'>
+    <view class="iconfont icon-jingbao"></view>
+    <view class="number">{{waitEventNum}}</view>
+    <view class="divider"></view>
+    <view class="text">待处理事件</view>
+  </view>
+</view>
+<!-- 最近事件 -->
+<view class="latest-event">
+  <view class="title">最近事件</view>
+  <view class="event-card">
+    <view class="left">
+      <text class="type">{{event.eventType}}</text>
+      <text class="iconfont icon-didian"></text>
+      <text class="area">{{event.eventArea}}</text>
+      <view class="time">{{event.eventOccurrenceTime}}</view>
+    </view>
+    <view class="status">
+      <view wx:if="{{!event.eventStatus}}">
+        <view class="iconfont icon-gantanhao"></view>
+      </view>
+      <view wx:if="{{event.eventStatus}}">
+        <view class="iconfont icon-zhengque"></view>
+      </view>
+    </view>
+  </view>
+</view>

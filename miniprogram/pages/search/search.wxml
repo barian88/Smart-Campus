@@ -1,0 +1,73 @@
+<!--pages/search/search.wxml-->
+<view class="list" wx:for="{{alarmList}}" wx:key="index">
+  <view class="list-item" bindtap="openEventDetail" data-item="{{item}}">
+    <view class="img">
+      <image src="{{item.eventImgUrl}}"></image>
+      <!-- <image src="../../images/1.png" /> -->
+    </view>
+    <view class="left">
+      <view>
+        <view class="type">{{item.eventType}}</view>
+        <view class="time">
+          {{item.eventOccurrenceTime}}
+        </view>
+      </view>
+      <view>
+        <view class="area">
+          <view class="iconfont icon-didian"></view>
+          <view class="text">{{item.eventArea}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="right">
+      <view wx:if="{{item.eventStatus==1}}" class="status pos">已处理</view>
+      <view wx:if="{{item.eventStatus==0}}" class="status neg">未处理</view>
+      <view class="but-detail" bindtap="skipTravelDetails" data-id="{{item.eventId}}">查看详情</view>
+    </view>
+  </view>
+</view>
+<van-popup class="pop" show="{{ showEventDetail }}" position="bottom" custom-style="height: 80%;" round bind:close="closeEventDetail">
+  <view class="up-container">
+    <view class="img">
+      <image src="{{event.eventImgUrl}}"></image>
+      <!-- <image src="../../images/1.png" /> -->
+    </view>
+    <view class="right">
+      <view class="type">
+        <view class="iconfont icon-leixing"></view>
+        <view class="text">{{event.eventType}}</view>
+      </view>
+      <view class="area">
+        <view class="iconfont icon-didian"></view>
+        <view class="text">{{event.eventArea}}</view>
+      </view>
+      <view class="status">
+        <view wx:if="{{event.eventStatus==1}}" class="status pos">已处理</view>
+        <view wx:if="{{event.eventStatus==0}}" class="status neg">未处理</view>
+      </view>
+    </view>
+  </view>
+  <view class="down-container">
+    <view class="time">
+      <view class="iconfont icon-shijian"></view>
+      <view class="text">发生于：{{event.eventOccurrenceTime}}</view>
+    </view>
+    <view class="time">
+      <view class="iconfont icon-shijian"></view>
+      <view class="text">处理于：{{event.eventHandlingTime}}</view>
+    </view>
+    <view class="comment">
+      <view class="text" wx:if="{{event.eventStatus == 1}}">{{event.eventHandlingComment}}</view>
+      <form wx:if="{{event.eventStatus == 0}}">
+        <textarea class="comment-input" placeholder="请输入处理意见" name="eventHandlingComment" bindinput="eventHandlingComment"></textarea>
+      </form>
+    </view>
+    <view class="but-handle {{eventHandlingComment == '' ? 'disable' : 'enable'}}" wx:if="{{event.eventStatus == 0}}" bindtap="complete">完成</view>
+  </view>
+</van-popup>
+
+<!--
+eventOccurrenceTime: "2023-03-17 16:10:19"
+eventHandlingTime: null
+eventHandlingComment: null
+ -->

@@ -1,0 +1,14 @@
+<video src="{{event.eventVideoUrl}}" autoplay="true" loop="true" object-fit="fill" class="video"></video>
+<!-- <image src="{{event.eventImgUrl}}" class="video"></image> -->
+
+<van-cell-group inset>
+  <van-cell title="事件类型" value="{{event.eventType}}" size="large" />
+  <van-cell title="设备位置" value="{{event.eventArea}} " size="large" />
+  <van-cell title="发生时间" value="{{event.eventOccurrenceTime}} " size="large" />
+</van-cell-group>
+<form>
+  <view class="text">
+    <textarea placeholder="输入事件处理结果" name="eventHandlingComment" bindinput="eventHandlingComment"></textarea>
+  </view>
+  <button form-type="submit" class="but-submit {{eventHandlingComment?'enable':'disable'}} " bindtap="eventComplete">确认</button>
+</form>

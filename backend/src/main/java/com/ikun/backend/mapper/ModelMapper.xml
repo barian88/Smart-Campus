@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikun.backend.mapper.ModelMapper">
+
+    <insert useGeneratedKeys="true" keyProperty="modelId"
+            id="insertModel" parameterType="com.ikun.backend.entity.Model">
+        insert into model (model_type,model_name,model_url,model_date,
+                                  model_desc,current_epoch,total_epoch,model_status,customized)
+        values (#{modelType},#{modelName},#{modelUrl},
+                #{modelDate},#{modelDesc},#{currentEpoch},#{totalEpoch},#{modelStatus},#{customized})
+    </insert>
+
+    <select id="queryModelNameExistence" parameterType="String" resultType="Integer">
+        select count(*) from model where model_name = #{modelName}
+    </select>
+
+    <select id="queryModelTypeExistence" parameterType="String" resultType="Integer">
+        select count(*) from model where model_type = #{modelType}
+    </select>
+
+    <select id="selectModel" resultType="com.ikun.backend.entity.Model" parameterType="Boolean">
+        select * from model
+        <if test="onlyComplete == true">
+            where model_status = 1
+        </if>
+    </select>
+
+    <delete id="deleteModel" parameterType="Integer">
+        delete from model where model_id = #{modelId}
+    </delete>
+
+    <select id="selectModelById" parameterType="Integer" resultType="com.ikun.backend.entity.Model">
+        select * from model where model_id = #{modelId}
+    </select>
+
+    <update id="updateModel" parameterType="com.ikun.backend.entity.Model">
+        update model
+        <trim prefix="set" suffixOverrides=",">
+            <if test="modelDesc != null and modelDesc.length()>0"> model_desc = #{modelDesc} , </if>
+            <if test="currentEpoch > 0"> current_epoch = #{currentEpoch}, </if>
+            <if test="modelStatus == true"> model_status = #{modelStatus}, </if>
+        </trim>
+        where model_id = #{modelId}
+    </update>
+
+    <select id="selectModelByType" parameterType="String" resultType="com.ikun.backend.entity.Model">
+        select * from model where model_type = #{modelType}
+    </select>
+</mapper>

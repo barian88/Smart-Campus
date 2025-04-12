@@ -1,0 +1,40 @@
+.video {
+  width: calc(100% - 64rpx);
+  margin: 32rpx auto;
+  display: flex;
+  border-radius: 24rpx;
+}
+
+textarea {
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.text {
+  background-color: #ffffff;
+  margin: 32rpx 32rpx 0 32rpx;
+  border-radius: 16rpx;
+  padding: 20rpx 32rpx;
+}
+
+.but-submit {
+  border-radius: 999rpx;
+  color: #FFFFFF;
+  font-size: large;
+  width: 90%;
+  margin: 32rpx auto;
+}
+
+.enable {
+  background: #5E5DF0;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+}
+
+.enable:active {
+  background: #3d3ddb;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+}
+
+.disable {
+  background-color: #93A3D6;
+}

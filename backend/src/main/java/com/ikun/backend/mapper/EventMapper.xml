@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikun.backend.mapper.EventMapper">
+<!--    规范写法，进行一个Java与数据库的映射
+id：主键
+result：其他列-->
+    <resultMap id="ResultMap" type="com.ikun.backend.entity.Event">
+        <id column="event_id" jdbcType="INTEGER" property="eventId"/>
+        <result column="event_img_url" jdbcType="VARCHAR" property="eventImgUrl"/>
+        <result column="camera_id" jdbcType="INTEGER" property="cameraId"/>
+        <result column="event_type" jdbcType="VARCHAR" property="eventType"/>
+        <result column="event_area" jdbcType="VARCHAR" property="eventArea"/>
+        <result column="event_occurrence_time" jdbcType="TIMESTAMP" property="eventOccurrenceTime"/>
+        <result column="event_status" jdbcType="INTEGER" property="eventStatus"/>
+        <result column="event_handler_name" jdbcType="VARCHAR" property="eventHandlerName"/>
+        <result column="event_handler_job_id" jdbcType="VARCHAR" property="eventHandlerJobId"/>
+        <result column="event_handling_time" jdbcType="TIMESTAMP" property="eventHandlingTime"/>
+        <result column="event_handling_comment" jdbcType="VARCHAR" property="eventHandlingComment"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        event_id,
+        event_img_url,
+        event_video_url,
+        camera_id,
+        event_type,
+        event_area,
+        event_occurrence_time,
+        event_status,
+        event_handler_name,
+        event_handler_job_id,
+        event_handling_time,
+        event_handling_comment
+    </sql>
+
+
+    <select id="selectEventByCameraId" resultType="com.ikun.backend.entity.Event">
+        SELECT <include refid="Base_Column_List"/>
+        FROM `event`
+        where camera_id = #{cameraId}
+    </select>
+
+    <select id="selectEventByType" resultType="com.ikun.backend.entity.Event">
+        SELECT <include refid="Base_Column_List"/>
+        FROM `event`
+        where event_type = #{eventType}
+    </select>
+
+    <insert useGeneratedKeys="true" keyProperty="eventId"
+            id="insertEvent" parameterType="com.ikun.backend.entity.Event">
+        insert into event (event_id,event_img_url,event_video_url,camera_id,
+                           event_type,event_area,event_occurrence_time,event_status)
+        values (#{eventId},#{eventImgUrl},#{eventVideoUrl},#{cameraId},#{eventType},
+                #{eventArea},#{eventOccurrenceTime},#{eventStatus});
+    </insert>
+
+    <select id="selectEventByPageByCondition"  resultType="com.ikun.backend.entity.Event"
+    parameterType="com.ikun.backend.utils.pageUtil.PageRequest">
+        select
+        <include refid="Base_Column_List" />
+        from event
+        <where>
+            <if test="eventArea!=null and eventArea!=''">
+                event_area = #{eventArea}
+            </if>
+            <if test="eventType!=null and eventType!=''">
+                AND event_type=#{eventType}
+            </if>
+            <if test="cameraId!=null and cameraId!=''">
+                AND camera_id=#{cameraId}
+            </if>
+            <if test="beginDate!=null and beginDate!='' and endDate!=null and endDate!=''">
+                AND event_occurrence_time between #{beginDate} and #{endDate}
+            </if>
+            <if test="eventHandlerName != null and eventHandlerName != ''">
+                AND event_handler_name = #{eventHandlerName}
+            </if>
+            <if test="eventHandlerJobId != null and eventHandlerJobId != ''">
+                AND event_handler_job_id = #{eventHandlerJobId}
+            </if>
+            <if test="eventStatus != null and eventStatus != ''">
+                AND event_status = #{eventStatus}
+            </if>
+            <if test="userId != 0">
+                AND  camera_id in (
+                select camera_id from camera_to_user WHERE  user_id = #{userId} )
+            </if>
+        </where>
+        <if test="orderByTimeDesc == true">
+            order by event_occurrence_time desc
+        </if>
+
+    </select>
+
+    <update id="updateEvent">
+        update event set event_status = true,
+                         event_handler_name = #{eventHandlerName},
+                         event_handler_job_id = #{eventHandlerJobId},
+                         event_handling_time = #{eventHandlingTime},
+                         event_handling_comment = #{eventHandlingComment}
+        where event_id = #{eventId}
+    </update>
+
+    <select id="selectEventById" parameterType="Integer" resultType="com.ikun.backend.entity.Event">
+        SELECT <include refid="Base_Column_List"/>
+        FROM event
+        where event_id = #{eventId}
+    </select>
+
+    <select id="selectEventInfoByUserIdByPage" resultType="com.ikun.backend.entity.Event">
+    select * from `event` WHERE camera_id in (
+    select camera_id from camera_to_user WHERE  user_id = #{userId} )
+    </select>
+
+    <select id="selectLatestEventByCameraId" resultType="com.ikun.backend.entity.Event">
+        select c.camera_id, e.event_id, e.event_area, e.event_type, e.event_status, e.event_img_url,
+               e.event_video_url, e.event_handler_name, e.event_handling_time, e.event_handler_job_id,
+               e.event_occurrence_time, e.event_handling_comment from `event` e
+                   right join `camera` c on e.camera_id = c.camera_id
+        where event_id in (select MAX(event_id) from `event` group by camera_id) or event_id  is null
+    </select>
+
+    <select id="selectCountByType" resultType="java.util.HashMap">
+        select event_type,count(*) from event group by event_type
+    </select>
+
+    <select id="selectEventsByIds" resultType="com.ikun.backend.entity.Event">
+        select * from event
+        <foreach collection="eventIds" item="eventId" separator="," open="WHERE event_id IN(" close=")">
+            #{eventId}
+        </foreach>
+    </select>
+</mapper>

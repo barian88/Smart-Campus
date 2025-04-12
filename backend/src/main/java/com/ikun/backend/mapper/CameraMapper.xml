@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikun.backend.mapper.CameraMapper">
+
+    <select id="selectCameraById" resultType="Camera" parameterType="Integer">
+        select * from camera where camera_id = #{cameraId}
+    </select>
+
+    <select id="selectCameraByPageByCondition"  resultType="com.ikun.backend.entity.Camera"
+            parameterType="com.ikun.backend.utils.pageUtil.PageRequest">
+        select
+        *
+        from camera
+        <if test="cameraAreaList!=null and cameraAreaList.size>0">
+             <foreach collection="cameraAreaList" item="cameraArea" separator="," open="WHERE camera_area IN(" close=")">
+                 #{cameraArea}
+             </foreach>
+        </if>
+    </select>
+
+    <update id="updateCamera" parameterType="com.ikun.backend.entity.Camera">
+        update camera
+        <trim prefix="set" suffixOverrides=",">
+            <if test="newProperties.contains('cameraUrl')">
+                camera_url = #{cameraUrl},
+            </if>
+            <if test="newProperties.contains('cameraArea')">
+                camera_area = #{cameraArea},
+            </if>
+            <if test="newProperties.contains('cameraName')">
+                camera_name = #{cameraName},
+            </if>
+            <if test="newProperties.contains('cameraStatus')">
+                camera_status = #{cameraStatus},
+            </if>
+            <if test="newProperties.contains('cameraLocation')">
+                camera_location = #{cameraLocation},
+            </if>
+            <if test="newProperties.contains('hasPerson')">
+                has_person = #{hasPerson},
+            </if>
+            <if test="newProperties.contains('edgeProtection')">
+                edge_protection = #{edgeProtection},
+            </if>
+            <if test="newProperties.contains('edgeProtectionName')">
+                edge_protection_name = #{edgeProtectionName},
+            </if>
+            <if test="newProperties.contains('fenceProtection')">
+                fence_protection = #{fenceProtection},
+            </if>
+            <if test="newProperties.contains('delayParam')">
+                delay_param = #{delayParam},
+            </if>
+            <if test="newProperties.contains('arrayParam')">
+                array_param = #{arrayParam}
+            </if>
+        </trim>
+        where camera_id = #{cameraId}
+    </update>
+
+    <insert id="insertCamera" parameterType="com.ikun.backend.entity.Camera"
+            useGeneratedKeys="true" keyProperty="cameraId">
+        insert into camera (camera_id,camera_url,camera_area,camera_name,camera_status,camera_location,
+                            has_person,edge_protection,edge_protection_name,fence_protection,delay_param,array_param)
+                    values (#{cameraId},#{cameraUrl},#{cameraArea},#{cameraName},#{cameraStatus},#{cameraLocation},
+                                #{hasPerson},#{edgeProtection},#{edgeProtectionName},#{fenceProtection},#{delayParam},#{arrayParam})
+    </insert>
+
+    <select id="selectCountByArea" resultType="java.util.HashMap">
+        select camera_area as cameraArea,count(*) as number from camera group by camera_area
+    </select>
+
+    <select id="selectAllCamera" resultType="com.ikun.backend.entity.Camera">
+        select * from camera
+    </select>
+
+    <select id="selectEnabledCount" resultType="Integer">
+        select count(*) from camera where camera_status = 1
+    </select>
+
+    <select id="checkCameraUrlExistence" resultType="Integer" parameterType="String">
+        select count(*) from camera where camera_url = #{cameraUrl}
+    </select>
+</mapper>

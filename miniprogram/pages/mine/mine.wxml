@@ -1,0 +1,27 @@
+<!--用户头像和昵称-->
+<view class="userInformation">
+  <image class="userInfomation-avatar" src="{{userInfo.avatar}}">
+  </image>
+  <view class="userInformation-nickname">{{userInfo.nickname}}</view>
+  <view class="iconfont icon-xiugai" bindtap="editProfile"></view>
+</view>
+<view class="info-list">
+  <view class="list-item">
+    <view class="iconfont icon-xingming"></view>
+    <view class="text">姓名</view>
+    <view class="value">{{userInfo.realName}}</view>
+  </view>
+  <view class="divider"></view>
+  <view class="list-item">
+    <view class="iconfont icon-gonghao"></view>
+    <view class="text">工号</view>
+    <view class="value">{{userInfo.schoolJobId}}</view>
+  </view>
+  <view class="divider"></view>
+  <view class="list-item">
+    <view class="iconfont icon-shouji"></view>
+    <view class="text">手机</view>
+    <view class="value">{{userInfo.phone}}</view>
+  </view>
+  <view class="divider"></view>
+</view>

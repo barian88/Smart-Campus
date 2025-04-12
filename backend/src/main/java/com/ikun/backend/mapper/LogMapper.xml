@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ikun.backend.mapper.LogMapper">
+
+    <insert useGeneratedKeys="true" keyProperty="logId"
+            id="insertLog" parameterType="com.ikun.backend.entity.Log">
+        insert into log (operator,ip_address,log_type,log_operation,log_content,log_time)
+        values (#{operator},#{ipAddress},#{logType},
+                #{logOperation},#{logContent},#{logTime})
+    </insert>
+
+    <select id="selectLogByPageByCondition"  resultType="com.ikun.backend.entity.Log"
+            parameterType="com.ikun.backend.utils.pageUtil.PageRequest">
+        select
+        *
+        from log
+        <where>
+            <if test = "logType != '' and logType != null ">
+                log_type = #{logType}
+            </if>
+        </where>
+    </select>
+</mapper>
